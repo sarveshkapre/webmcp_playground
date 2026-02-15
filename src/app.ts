@@ -3,6 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { z } from "zod";
 import { appendAuditEntry, listAuditEntries } from "./audit-log.js";
 import { PROTOCOL_VERSION, type AuditLogResponse, type ListToolsResponse } from "./protocol.js";
+import { initializeStorePersistence } from "./store-config.js";
 import { callTool, getToolDescriptor, listTools } from "./tools.js";
 
 const CallToolRequestSchema = z
@@ -14,6 +15,8 @@ const CallToolRequestSchema = z
     confirmed: z.boolean().optional()
   })
   .strict();
+
+initializeStorePersistence();
 
 function sendJson(res: ServerResponse, statusCode: number, body: unknown): void {
   res.statusCode = statusCode;
