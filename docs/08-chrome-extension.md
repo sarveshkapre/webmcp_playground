@@ -16,6 +16,15 @@ The extension helps developers answer two onboarding questions quickly:
 - Detects `navigator.modelContext` on the active tab (popup button: **Detect in Tab**).
 - Calls local `POST /mcp/list_tools` and shows tool names (popup button: **List Tools**).
 - Saves preferred base URL in extension local storage.
+- Ships a branded icon pack for toolbar and extension listing.
+
+## Branding assets
+
+- `apps/chrome-extension/assets/icon-master.svg`
+- `apps/chrome-extension/assets/icon-16.png`
+- `apps/chrome-extension/assets/icon-32.png`
+- `apps/chrome-extension/assets/icon-48.png`
+- `apps/chrome-extension/assets/icon-128.png`
 
 ## Load it in Chrome
 

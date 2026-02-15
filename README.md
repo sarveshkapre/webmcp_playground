@@ -89,8 +89,8 @@ Details: `docs/03-llm-integration.md`
 
 ## Web UI + Extension
 
-- Website app: `apps/web` (tutorial + playground console)
-- Chrome extension: `apps/chrome-extension` (WebMCP Scout)
+- Website app: `apps/web` (Home, `/tutorial`, `/playground`, `/extension`)
+- Chrome extension: `apps/chrome-extension` (WebMCP Scout + branded icon pack)
 - Extension guide: `docs/08-chrome-extension.md`
 
 ## WebMCP Guidance Alignment

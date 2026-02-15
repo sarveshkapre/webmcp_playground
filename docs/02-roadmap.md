@@ -45,3 +45,5 @@
 - [x] Build Next.js + Tailwind + shadcn-style tutorial website
 - [x] Add in-browser playground console for local WebMCP endpoints
 - [x] Add Chrome extension MVP for capability detection and local tool listing
+- [x] Split web app into dedicated tutorial/playground/extension routes
+- [x] Add branded icon pack for extension distribution
