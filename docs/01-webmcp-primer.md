@@ -9,6 +9,7 @@ WebMCP-like patterns help LLM apps call external capabilities through a clear to
 - Tool discovery (`list_tools`)
 - Tool invocation (`call_tool`)
 - Typed request/response envelopes
+- Protocol version compatibility checks
 - Error handling that the LLM can reason about
 
 ## What To Learn Here

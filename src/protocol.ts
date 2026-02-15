@@ -30,6 +30,7 @@ export interface CallToolRequest {
   sessionId?: string;
   requestId?: string;
   confirmed?: boolean;
+  protocolVersion?: string;
 }
 
 export interface CallToolResponse {

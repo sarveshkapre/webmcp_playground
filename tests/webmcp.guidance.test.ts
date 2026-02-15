@@ -188,6 +188,26 @@ test("session-scoped tools require sessionId", async () => {
   assert.equal(body.error?.code, "SESSION_REQUIRED");
 });
 
+test("unsupported protocol version returns explicit error", async () => {
+  const response = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "sum",
+      protocolVersion: "legacy-v1",
+      arguments: { a: 1, b: 2 }
+    })
+  });
+
+  assert.equal(response.status, 400);
+  const body = (await response.json()) as {
+    ok?: boolean;
+    error?: { code?: string };
+  };
+  assert.equal(body.ok, false);
+  assert.equal(body.error?.code, "UNSUPPORTED_PROTOCOL_VERSION");
+});
+
 test("invalid request shape returns BAD_REQUEST with HTTP 400", async () => {
   const response = await fetch(`${baseUrl}/mcp/call_tool`, {
     method: "POST",

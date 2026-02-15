@@ -32,6 +32,7 @@ This repo is an educational runtime playground, not the standard itself. We trea
 | Per-tool argument schemas | Minimizes unsafe or ambiguous inputs | Implemented | `src/tools.ts`, tests |
 | Unique tool names | Aligns with proposal guidance | Implemented | `tests/webmcp.guidance.test.ts` |
 | Protocol envelope fields (`protocolVersion`, `requestId`) | Compatibility and traceability | Implemented | `tests/webmcp.guidance.test.ts` |
+| Unsupported version handling | Avoids silent cross-version misbehavior | Implemented | `tests/webmcp.guidance.test.ts` |
 | Side-effect and confirmation policy | Safer handling for write/sensitive tools | Implemented | `tests/mcp.integration.test.ts` |
 | Session-scoped tool isolation | Prevents cross-session state bleed | Implemented | `tests/mcp.integration.test.ts` |
 | Tool-call audit logging | Accountability and debugging | Implemented | `tests/mcp.integration.test.ts` |
@@ -49,7 +50,7 @@ This repo is an educational runtime playground, not the standard itself. We trea
 ## Build-Order For Next Required Work
 
 1. Add stronger output-level redaction policies for tool results.
-2. Add compatibility tests for multiple protocol versions.
+2. Expand protocol compatibility coverage beyond explicit unsupported-version checks.
 3. Add stronger output sanitization fixtures for adversarial content.
 4. Add multi-process coordination for shared session/audit state.
 

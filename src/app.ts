@@ -13,7 +13,8 @@ const CallToolRequestSchema = z
     arguments: z.record(z.string(), z.unknown()).optional(),
     sessionId: z.string().min(1).max(128).optional(),
     requestId: z.string().min(1).max(128).optional(),
-    confirmed: z.boolean().optional()
+    confirmed: z.boolean().optional(),
+    protocolVersion: z.string().min(1).max(128).optional()
   })
   .strict();
 
@@ -86,6 +87,20 @@ export async function handleRequest(req: IncomingMessage, res: ServerResponse): 
         ...parsed.data,
         requestId: parsed.data.requestId ?? requestId
       };
+
+      if (request.protocolVersion && request.protocolVersion !== PROTOCOL_VERSION) {
+        sendJson(res, 400, {
+          protocolVersion: PROTOCOL_VERSION,
+          requestId: request.requestId,
+          ok: false,
+          error: {
+            code: "UNSUPPORTED_PROTOCOL_VERSION",
+            message: `Supported protocolVersion is ${PROTOCOL_VERSION}.`
+          }
+        });
+        return;
+      }
+
       const result = callTool(request);
 
       const descriptor = getToolDescriptor(request.name);
