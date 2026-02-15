@@ -1,0 +1,30 @@
+{
+  "name": "webmcp-playground",
+  "version": "0.1.0",
+  "description": "A public playground for learning WebMCP patterns for LLM integrations.",
+  "type": "module",
+  "private": false,
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "client": "tsx src/client.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "llm",
+    "webmcp",
+    "playground"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
