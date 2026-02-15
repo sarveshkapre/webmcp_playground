@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "WebMCP Scout",
+  "description": "Detect WebMCP capability on pages and inspect local WebMCP servers.",
+  "version": "0.1.0",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://localhost:8787/*"],
+  "action": {
+    "default_title": "WebMCP Scout",
+    "default_popup": "popup.html"
+  }
+}

@@ -39,3 +39,9 @@
 - [x] Add persistence-backed audit/session storage (opt-in via `WEBMCP_DATA_DIR`)
 - [x] Add configurable argument/result redaction for audit logs
 - [x] Add output sanitization for risky prompt-injection-like content
+
+## Phase 7: Adoption UX
+
+- [x] Build Next.js + Tailwind + shadcn-style tutorial website
+- [x] Add in-browser playground console for local WebMCP endpoints
+- [x] Add Chrome extension MVP for capability detection and local tool listing

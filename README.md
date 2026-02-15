@@ -12,6 +12,8 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 
 - Minimal TypeScript WebMCP-style playground server (`src/server.ts`)
 - Example client (`src/client.ts`)
+- Next.js + Tailwind + shadcn-style tutorial website (`apps/web`)
+- Chrome extension companion for capability detection + tool listing (`apps/chrome-extension`)
 - Endpoint integration tests (`tests/mcp.integration.test.ts`)
 - Guidance/conformance checks (`tests/webmcp.guidance.test.ts`)
 - Adversarial descriptor security tests (`tests/security.injection.test.ts`)
@@ -49,6 +51,12 @@ Run tests:
 npm test
 ```
 
+Run the website:
+
+```bash
+npm run web:dev
+```
+
 Enable persistence for session notes and audit logs:
 
 ```bash
@@ -79,6 +87,12 @@ node examples/openai_responses_agent.mjs "What is 7 + 35?"
 
 Details: `docs/03-llm-integration.md`
 
+## Web UI + Extension
+
+- Website app: `apps/web` (tutorial + playground console)
+- Chrome extension: `apps/chrome-extension` (WebMCP Scout)
+- Extension guide: `docs/08-chrome-extension.md`
+
 ## WebMCP Guidance Alignment
 
 This repo tracks alignment to WebMCP reference guidance in:
@@ -102,7 +116,11 @@ When protocol semantics change, update that file and matching tests.
 │   ├── 04-webmcp-alignment.md
 │   ├── 05-architecture.md
 │   ├── 06-prompts-and-transcripts.md
-│   └── 07-reliability-notes.md
+│   ├── 07-reliability-notes.md
+│   └── 08-chrome-extension.md
+├── apps/
+│   ├── web/
+│   └── chrome-extension/
 ├── examples/
 │   └── openai_responses_agent.mjs
 ├── src/

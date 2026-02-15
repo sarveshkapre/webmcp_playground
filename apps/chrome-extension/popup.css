@@ -1,0 +1,90 @@
+:root {
+  --bg: #f2f7f6;
+  --surface: #ffffff;
+  --line: #d3dde5;
+  --text: #0b1c2a;
+  --muted: #54708b;
+  --brand: #0d8e7f;
+}
+
+body {
+  margin: 0;
+  width: 360px;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 "Avenir Next", "Segoe UI", sans-serif;
+}
+
+main {
+  padding: 14px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 18px;
+}
+
+.muted {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 10px;
+  background: var(--surface);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-weight: 600;
+  color: white;
+  background: var(--brand);
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 9px;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+
+#capability {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+pre {
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+  max-height: 180px;
+  overflow: auto;
+  font: 11px/1.35 "SF Mono", Menlo, monospace;
+}

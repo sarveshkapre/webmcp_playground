@@ -10,6 +10,9 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "client": "tsx src/client.ts",
+    "web:dev": "npm --prefix apps/web run dev",
+    "web:lint": "npm --prefix apps/web run lint",
+    "web:build": "npm --prefix apps/web run build",
     "test": "tsx --test tests/**/*.test.ts",
     "typecheck": "tsc --noEmit",
     "build": "tsc -p tsconfig.json",

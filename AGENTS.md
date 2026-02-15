@@ -44,6 +44,8 @@ npm run client
 - `src/app.ts`: HTTP route handling and request validation.
 - `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.
+- `apps/web`: Next.js tutorial and browser playground UI.
+- `apps/chrome-extension`: Chrome extension companion (WebMCP Scout).
 - `tests/`: Endpoint integration, guidance, and security tests.
 - `docs/`: Learning notes and roadmap.
 - `docs/04-webmcp-alignment.md`: Required alignment checklist against reference WebMCP guidance.
