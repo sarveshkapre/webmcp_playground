@@ -24,6 +24,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Configurable audit redaction for arguments/results (`WEBMCP_REDACT_KEYS`)
 - Optional tool output sanitization for risky text (`WEBMCP_SANITIZE_OUTPUT`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
+- Architecture and reliability docs (`docs/05-architecture.md`, `docs/07-reliability-notes.md`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)
 - Basic CI for test + typecheck + build (`.github/workflows/ci.yml`)
@@ -90,7 +91,10 @@ When protocol semantics change, update that file and matching tests.
 │   ├── 01-webmcp-primer.md
 │   ├── 02-roadmap.md
 │   ├── 03-llm-integration.md
-│   └── 04-webmcp-alignment.md
+│   ├── 04-webmcp-alignment.md
+│   ├── 05-architecture.md
+│   ├── 06-prompts-and-transcripts.md
+│   └── 07-reliability-notes.md
 ├── examples/
 │   └── openai_responses_agent.mjs
 ├── src/

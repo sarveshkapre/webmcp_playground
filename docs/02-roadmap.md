@@ -15,13 +15,13 @@
 ## Phase 3: Real LLM Integration
 
 - [x] Wire into an LLM agent framework
-- [ ] Add example prompts and transcripts
-- [ ] Capture reliability/performance notes
+- [x] Add example prompts and transcripts
+- [x] Capture reliability/performance notes
 
 ## Phase 4: Public Learning Repo Quality
 
 - [x] Add tests
-- [ ] Add architecture diagram
+- [x] Add architecture diagram
 - [ ] Add release tags/changelog
 
 ## Phase 5: WebMCP Guidance Alignment
