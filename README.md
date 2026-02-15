@@ -20,6 +20,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Session-scoped tool isolation (`append_note`, `list_notes`, `clear_notes`)
 - Protocol envelope fields (`protocolVersion`, `requestId`)
 - Tool-call audit endpoint (`GET /mcp/audit_log`)
+- Metrics endpoint (`GET /mcp/metrics`)
 - Optional file-backed persistence for sessions/audit (`WEBMCP_DATA_DIR`)
 - Configurable audit redaction for arguments/results (`WEBMCP_REDACT_KEYS`)
 - Optional tool output sanitization for risky text (`WEBMCP_SANITIZE_OUTPUT`)
@@ -59,6 +60,12 @@ Inspect recent audit entries:
 
 ```bash
 curl "http://localhost:8787/mcp/audit_log?limit=10"
+```
+
+Inspect runtime metrics:
+
+```bash
+curl "http://localhost:8787/mcp/metrics"
 ```
 
 ## LLM Integration Example
@@ -102,6 +109,7 @@ When protocol semantics change, update that file and matching tests.
 │   ├── audit-log.ts
 │   ├── app.ts
 │   ├── client.ts
+│   ├── metrics.ts
 │   ├── persistence.ts
 │   ├── policy.ts
 │   ├── protocol.ts

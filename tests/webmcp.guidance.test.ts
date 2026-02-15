@@ -3,6 +3,7 @@ import { createServer, request, type IncomingHttpHeaders, type Server } from "no
 import { after, before, beforeEach, test } from "node:test";
 import { resetAuditLog } from "../src/audit-log.js";
 import { handleRequest } from "../src/app.js";
+import { resetMetrics } from "../src/metrics.js";
 import { PROTOCOL_VERSION } from "../src/protocol.js";
 import { resetSessionStore } from "../src/session-store.js";
 
@@ -41,6 +42,7 @@ after(async () => {
 beforeEach(() => {
   resetSessionStore();
   resetAuditLog();
+  resetMetrics();
 });
 
 function postRawJson(path: string, body: string): Promise<{

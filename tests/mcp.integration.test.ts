@@ -3,6 +3,7 @@ import { createServer, type Server } from "node:http";
 import { after, before, beforeEach, test } from "node:test";
 import { resetAuditLog } from "../src/audit-log.js";
 import { handleRequest } from "../src/app.js";
+import { resetMetrics } from "../src/metrics.js";
 import { resetSessionStore } from "../src/session-store.js";
 
 let server: Server;
@@ -40,6 +41,7 @@ after(async () => {
 beforeEach(() => {
   resetSessionStore();
   resetAuditLog();
+  resetMetrics();
 });
 
 test("POST /mcp/list_tools returns tool descriptors", async () => {
@@ -234,4 +236,47 @@ test("GET /mcp/audit_log redacts write-tool arguments", async () => {
   const entry = body.entries.find((candidate) => candidate.toolName === "append_note");
   assert.equal(entry?.argumentSummary?.text, "[REDACTED]");
   assert.equal(entry?.resultSummary, "[REDACTED]");
+});
+
+test("GET /mcp/metrics returns per-tool counters and error codes", async () => {
+  const goodCall = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "sum",
+      arguments: { a: 5, b: 5 }
+    })
+  });
+  assert.equal(goodCall.status, 200);
+
+  const badCall = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "sum",
+      arguments: { a: "5", b: 5 }
+    })
+  });
+  assert.equal(badCall.status, 200);
+
+  const metrics = await fetch(`${baseUrl}/mcp/metrics`, { method: "GET" });
+  assert.equal(metrics.status, 200);
+
+  const body = (await metrics.json()) as {
+    totals?: { totalCalls?: number; okCalls?: number; errorCalls?: number };
+    tools?: Record<
+      string,
+      { totalCalls?: number; okCalls?: number; errorCalls?: number; avgLatencyMs?: number }
+    >;
+    errorsByCode?: Record<string, number>;
+  };
+
+  assert.equal(body.totals?.totalCalls, 2);
+  assert.equal(body.totals?.okCalls, 1);
+  assert.equal(body.totals?.errorCalls, 1);
+  assert.equal(body.tools?.sum?.totalCalls, 2);
+  assert.equal(body.tools?.sum?.okCalls, 1);
+  assert.equal(body.tools?.sum?.errorCalls, 1);
+  assert.equal(typeof body.tools?.sum?.avgLatencyMs, "number");
+  assert.equal(body.errorsByCode?.INVALID_ARGUMENTS, 1);
 });

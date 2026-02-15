@@ -2,7 +2,13 @@ import { randomUUID } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { z } from "zod";
 import { appendAuditEntry, listAuditEntries } from "./audit-log.js";
-import { PROTOCOL_VERSION, type AuditLogResponse, type ListToolsResponse } from "./protocol.js";
+import { getMetricsSnapshot, recordToolCall } from "./metrics.js";
+import {
+  PROTOCOL_VERSION,
+  type AuditLogResponse,
+  type ListToolsResponse,
+  type MetricsResponse
+} from "./protocol.js";
 import { summarizeArgumentsForAudit, summarizeResultForAudit } from "./redaction.js";
 import { initializeStorePersistence } from "./store-config.js";
 import { callTool, getToolDescriptor, listTools } from "./tools.js";
@@ -66,8 +72,38 @@ export async function handleRequest(req: IncomingMessage, res: ServerResponse): 
     return;
   }
 
+  if (method === "GET" && url === "/mcp/metrics") {
+    const snapshot = getMetricsSnapshot();
+    const tools: MetricsResponse["tools"] = {};
+
+    for (const [toolName, metric] of Object.entries(snapshot.tools)) {
+      const avgLatencyMs = metric.totalCalls > 0 ? metric.totalLatencyMs / metric.totalCalls : 0;
+      tools[toolName] = {
+        totalCalls: metric.totalCalls,
+        okCalls: metric.okCalls,
+        errorCalls: metric.errorCalls,
+        avgLatencyMs,
+        maxLatencyMs: metric.maxLatencyMs
+      };
+    }
+
+    const body: MetricsResponse = {
+      protocolVersion: PROTOCOL_VERSION,
+      totals: {
+        totalCalls: snapshot.totalCalls,
+        okCalls: snapshot.okCalls,
+        errorCalls: snapshot.errorCalls
+      },
+      tools,
+      errorsByCode: snapshot.errorsByCode
+    };
+    sendJson(res, 200, body);
+    return;
+  }
+
   if (method === "POST" && url === "/mcp/call_tool") {
     const requestId = randomUUID();
+    const startedAt = Date.now();
     try {
       const parsed = CallToolRequestSchema.safeParse(await readJson(req));
       if (!parsed.success) {
@@ -115,6 +151,7 @@ export async function handleRequest(req: IncomingMessage, res: ServerResponse): 
         outcome: result.ok ? "ok" : "error",
         errorCode: result.error?.code
       });
+      recordToolCall(request.name, result.ok ? "ok" : "error", Date.now() - startedAt, result.error?.code);
 
       sendJson(res, 200, result);
       return;
@@ -137,7 +174,8 @@ export async function handleRequest(req: IncomingMessage, res: ServerResponse): 
         "GET /health",
         "POST /mcp/list_tools",
         "POST /mcp/call_tool",
-        "GET /mcp/audit_log"
+        "GET /mcp/audit_log",
+        "GET /mcp/metrics"
       ]
     });
     return;

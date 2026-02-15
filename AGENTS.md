@@ -40,6 +40,7 @@ npm run client
 - `src/store-config.ts`: Optional persistence wiring from environment config.
 - `src/redaction.ts`: Argument redaction policy for audit logging.
 - `src/output-sanitizer.ts`: Output sanitization against risky prompt-injection-like text.
+- `src/metrics.ts`: Runtime counters and latency/error metrics.
 - `src/app.ts`: HTTP route handling and request validation.
 - `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.

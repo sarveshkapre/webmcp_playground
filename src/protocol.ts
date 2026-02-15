@@ -60,3 +60,23 @@ export interface AuditLogResponse {
   protocolVersion: string;
   entries: AuditEntry[];
 }
+
+export interface MetricsResponse {
+  protocolVersion: string;
+  totals: {
+    totalCalls: number;
+    okCalls: number;
+    errorCalls: number;
+  };
+  tools: Record<
+    string,
+    {
+      totalCalls: number;
+      okCalls: number;
+      errorCalls: number;
+      avgLatencyMs: number;
+      maxLatencyMs: number;
+    }
+  >;
+  errorsByCode: Record<string, number>;
+}

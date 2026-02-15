@@ -28,5 +28,17 @@ Current in-memory operations are O(1) to O(n) for small lists and bounded audit 
 ## Next reliability steps
 
 1. Add structured retry guidance for clients.
-2. Add metrics endpoint (counts by tool, error code, latency buckets).
+2. Expand metrics with latency buckets and percentile views.
 3. Add chaos/adversarial tests for malformed and high-volume traffic.
+
+## Metrics endpoint
+
+Current runtime metrics are exposed at:
+
+- `GET /mcp/metrics`
+
+The endpoint returns:
+
+- global call totals (`totalCalls`, `okCalls`, `errorCalls`)
+- per-tool totals and latency summaries
+- error counts keyed by error code
