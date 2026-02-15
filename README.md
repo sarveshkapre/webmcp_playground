@@ -21,7 +21,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Protocol envelope fields (`protocolVersion`, `requestId`)
 - Tool-call audit endpoint (`GET /mcp/audit_log`)
 - Optional file-backed persistence for sessions/audit (`WEBMCP_DATA_DIR`)
-- Configurable audit redaction keys (`WEBMCP_REDACT_KEYS`)
+- Configurable audit redaction for arguments/results (`WEBMCP_REDACT_KEYS`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)

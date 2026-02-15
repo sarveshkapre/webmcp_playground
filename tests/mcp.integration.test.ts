@@ -193,6 +193,7 @@ test("GET /mcp/audit_log returns recent entries", async () => {
       toolName?: string;
       outcome?: string;
       argumentSummary?: Record<string, string>;
+      resultSummary?: string;
     }>;
   };
   assert.ok(Array.isArray(body.entries));
@@ -201,6 +202,7 @@ test("GET /mcp/audit_log returns recent entries", async () => {
   assert.equal(body.entries[0]?.outcome, "ok");
   assert.equal(body.entries[0]?.argumentSummary?.a, "20");
   assert.equal(body.entries[0]?.argumentSummary?.b, "22");
+  assert.equal(body.entries[0]?.resultSummary?.includes("42"), true);
 });
 
 test("GET /mcp/audit_log redacts write-tool arguments", async () => {
@@ -222,9 +224,14 @@ test("GET /mcp/audit_log redacts write-tool arguments", async () => {
   assert.equal(audit.status, 200);
 
   const body = (await audit.json()) as {
-    entries?: Array<{ toolName?: string; argumentSummary?: Record<string, string> }>;
+    entries?: Array<{
+      toolName?: string;
+      argumentSummary?: Record<string, string>;
+      resultSummary?: string;
+    }>;
   };
   assert.ok(Array.isArray(body.entries));
   const entry = body.entries.find((candidate) => candidate.toolName === "append_note");
   assert.equal(entry?.argumentSummary?.text, "[REDACTED]");
+  assert.equal(entry?.resultSummary, "[REDACTED]");
 });

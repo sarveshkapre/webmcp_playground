@@ -1,4 +1,4 @@
-import type { ToolSideEffect } from "./protocol.js";
+import type { Json, ToolSideEffect } from "./protocol.js";
 
 const DEFAULT_REDACT_KEYS = ["password", "token", "secret", "email", "address", "card", "ssn"];
 
@@ -54,4 +54,24 @@ export function summarizeArgumentsForAudit(
   }
 
   return summary;
+}
+
+export function summarizeResultForAudit(result: Json | undefined, sideEffect: ToolSideEffect): string {
+  if (result === undefined) {
+    return "[NONE]";
+  }
+
+  if (sideEffect !== "read") {
+    return "[REDACTED]";
+  }
+
+  try {
+    const serialized = JSON.stringify(result);
+    if (!serialized) {
+      return "[NONE]";
+    }
+    return serialized.length <= 200 ? serialized : `${serialized.slice(0, 197)}...`;
+  } catch {
+    return "[UNSERIALIZABLE]";
+  }
 }

@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { z } from "zod";
 import { appendAuditEntry, listAuditEntries } from "./audit-log.js";
 import { PROTOCOL_VERSION, type AuditLogResponse, type ListToolsResponse } from "./protocol.js";
-import { summarizeArgumentsForAudit } from "./redaction.js";
+import { summarizeArgumentsForAudit, summarizeResultForAudit } from "./redaction.js";
 import { initializeStorePersistence } from "./store-config.js";
 import { callTool, getToolDescriptor, listTools } from "./tools.js";
 
@@ -111,6 +111,7 @@ export async function handleRequest(req: IncomingMessage, res: ServerResponse): 
         toolName: request.name,
         sideEffect: descriptor?.sideEffect ?? "read",
         argumentSummary: summarizeArgumentsForAudit(request.arguments, descriptor?.sideEffect ?? "read"),
+        resultSummary: summarizeResultForAudit(result.result, descriptor?.sideEffect ?? "read"),
         outcome: result.ok ? "ok" : "error",
         errorCode: result.error?.code
       });

@@ -51,6 +51,7 @@ export interface AuditEntry {
   toolName: string;
   sideEffect: ToolSideEffect;
   argumentSummary?: Record<string, string>;
+  resultSummary?: string;
   outcome: "ok" | "error";
   errorCode?: string;
 }
