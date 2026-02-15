@@ -20,6 +20,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Session-scoped tool isolation (`append_note`, `list_notes`, `clear_notes`)
 - Protocol envelope fields (`protocolVersion`, `requestId`)
 - Tool-call audit endpoint (`GET /mcp/audit_log`)
+- Optional file-backed persistence for sessions/audit (`WEBMCP_DATA_DIR`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)
@@ -42,6 +43,13 @@ Run tests:
 
 ```bash
 npm test
+```
+
+Enable persistence for session notes and audit logs:
+
+```bash
+export WEBMCP_DATA_DIR=".webmcp-data"
+npm run dev
 ```
 
 Inspect recent audit entries:
@@ -87,13 +95,16 @@ When protocol semantics change, update that file and matching tests.
 │   ├── audit-log.ts
 │   ├── app.ts
 │   ├── client.ts
+│   ├── persistence.ts
 │   ├── policy.ts
 │   ├── protocol.ts
 │   ├── server.ts
 │   ├── session-store.ts
+│   ├── store-config.ts
 │   └── tools.ts
 ├── tests/
 │   ├── mcp.integration.test.ts
+│   ├── persistence.storage.test.ts
 │   ├── security.injection.test.ts
 │   └── webmcp.guidance.test.ts
 └── package.json

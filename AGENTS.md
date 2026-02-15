@@ -36,6 +36,8 @@ npm run client
 - `src/policy.ts`: Tool policy checks (confirmation/session requirements).
 - `src/session-store.ts`: Session-scoped in-memory state used by tools.
 - `src/audit-log.ts`: In-memory audit trail for tool calls.
+- `src/persistence.ts`: JSON file persistence helpers.
+- `src/store-config.ts`: Optional persistence wiring from environment config.
 - `src/app.ts`: HTTP route handling and request validation.
 - `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.

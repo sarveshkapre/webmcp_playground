@@ -36,4 +36,4 @@
 - [x] Add in-memory audit trail for tool calls
 - [x] Add protocol version envelope fields
 - [x] Add adversarial descriptor validation tests
-- [ ] Add persistence-backed audit/session storage
+- [x] Add persistence-backed audit/session storage (opt-in via `WEBMCP_DATA_DIR`)
