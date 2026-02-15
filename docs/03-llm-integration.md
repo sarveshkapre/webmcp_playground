@@ -34,6 +34,7 @@ Optional environment variables:
 - `WEBMCP_AUTO_CONFIRM` (default: `true`)
 - `WEBMCP_DATA_DIR` (optional path for persistent session/audit state)
 - `WEBMCP_REDACT_KEYS` (optional comma-separated audit redaction keys)
+- `WEBMCP_SANITIZE_OUTPUT` (default: `true`; set `false` to disable output sanitization)
 
 ## Notes
 

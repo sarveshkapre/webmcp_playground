@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { sanitizeToolResult } from "./output-sanitizer.js";
 import { evaluatePolicy } from "./policy.js";
 import {
   PROTOCOL_VERSION,
@@ -193,5 +194,5 @@ export function callTool(req: CallToolRequest): CallToolResponse {
     sessionId: req.sessionId,
     confirmed: req.confirmed
   });
-  return responseOk(requestId, result);
+  return responseOk(requestId, sanitizeToolResult(result));
 }

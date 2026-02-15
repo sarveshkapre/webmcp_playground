@@ -22,6 +22,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Tool-call audit endpoint (`GET /mcp/audit_log`)
 - Optional file-backed persistence for sessions/audit (`WEBMCP_DATA_DIR`)
 - Configurable audit redaction for arguments/results (`WEBMCP_REDACT_KEYS`)
+- Optional tool output sanitization for risky text (`WEBMCP_SANITIZE_OUTPUT`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)
@@ -108,6 +109,7 @@ When protocol semantics change, update that file and matching tests.
 │   ├── mcp.integration.test.ts
 │   ├── persistence.storage.test.ts
 │   ├── security.injection.test.ts
+│   ├── security.output-sanitization.test.ts
 │   └── webmcp.guidance.test.ts
 └── package.json
 ```

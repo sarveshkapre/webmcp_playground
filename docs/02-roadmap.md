@@ -38,3 +38,4 @@
 - [x] Add adversarial descriptor validation tests
 - [x] Add persistence-backed audit/session storage (opt-in via `WEBMCP_DATA_DIR`)
 - [x] Add configurable argument/result redaction for audit logs
+- [x] Add output sanitization for risky prompt-injection-like content
