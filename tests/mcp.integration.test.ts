@@ -189,10 +189,42 @@ test("GET /mcp/audit_log returns recent entries", async () => {
   assert.equal(audit.status, 200);
 
   const body = (await audit.json()) as {
-    entries?: Array<{ toolName?: string; outcome?: string }>;
+    entries?: Array<{
+      toolName?: string;
+      outcome?: string;
+      argumentSummary?: Record<string, string>;
+    }>;
   };
   assert.ok(Array.isArray(body.entries));
   assert.equal(body.entries.length > 0, true);
   assert.equal(body.entries[0]?.toolName, "sum");
   assert.equal(body.entries[0]?.outcome, "ok");
+  assert.equal(body.entries[0]?.argumentSummary?.a, "20");
+  assert.equal(body.entries[0]?.argumentSummary?.b, "22");
+});
+
+test("GET /mcp/audit_log redacts write-tool arguments", async () => {
+  const call = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "append_note",
+      sessionId: "alpha",
+      confirmed: true,
+      arguments: { text: "top secret note" }
+    })
+  });
+  assert.equal(call.status, 200);
+
+  const audit = await fetch(`${baseUrl}/mcp/audit_log?limit=5`, {
+    method: "GET"
+  });
+  assert.equal(audit.status, 200);
+
+  const body = (await audit.json()) as {
+    entries?: Array<{ toolName?: string; argumentSummary?: Record<string, string> }>;
+  };
+  assert.ok(Array.isArray(body.entries));
+  const entry = body.entries.find((candidate) => candidate.toolName === "append_note");
+  assert.equal(entry?.argumentSummary?.text, "[REDACTED]");
 });

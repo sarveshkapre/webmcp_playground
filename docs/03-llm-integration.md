@@ -33,6 +33,7 @@ Optional environment variables:
 - `WEBMCP_SESSION_ID` (default: `agent-session`)
 - `WEBMCP_AUTO_CONFIRM` (default: `true`)
 - `WEBMCP_DATA_DIR` (optional path for persistent session/audit state)
+- `WEBMCP_REDACT_KEYS` (optional comma-separated audit redaction keys)
 
 ## Notes
 

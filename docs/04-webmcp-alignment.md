@@ -43,12 +43,12 @@ This repo is an educational runtime playground, not the standard itself. We trea
 |---|---|---|
 | Prompt/tool poisoning awareness | Descriptor validator rejects risky metadata patterns; strict payload validation in place | Add richer output-sanitization fixtures |
 | Misrepresentation of tool intent | Tool metadata includes side-effect class and confirmation requirements | Add stronger behavioral contracts for external integrations |
-| Over-parameterization/privacy | Tool inputs remain minimal and schema-validated | Add configurable redaction/PII policies |
+| Over-parameterization/privacy | Tool inputs remain minimal and schema-validated; audit logging applies configurable argument redaction | Add stronger output-level redaction policies |
 | Session isolation | Session-scoped tools require `sessionId`, with isolated state and optional file-backed persistence (`WEBMCP_DATA_DIR`) | Add multi-process coordination for distributed runtimes |
 
 ## Build-Order For Next Required Work
 
-1. Add configurable redaction policies for sensitive tool arguments and outputs.
+1. Add stronger output-level redaction policies for tool results.
 2. Add compatibility tests for multiple protocol versions.
 3. Add stronger output sanitization fixtures for adversarial content.
 4. Add multi-process coordination for shared session/audit state.

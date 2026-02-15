@@ -38,6 +38,7 @@ npm run client
 - `src/audit-log.ts`: In-memory audit trail for tool calls.
 - `src/persistence.ts`: JSON file persistence helpers.
 - `src/store-config.ts`: Optional persistence wiring from environment config.
+- `src/redaction.ts`: Argument redaction policy for audit logging.
 - `src/app.ts`: HTTP route handling and request validation.
 - `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.

@@ -49,6 +49,7 @@ export interface AuditEntry {
   sessionId?: string;
   toolName: string;
   sideEffect: ToolSideEffect;
+  argumentSummary?: Record<string, string>;
   outcome: "ok" | "error";
   errorCode?: string;
 }

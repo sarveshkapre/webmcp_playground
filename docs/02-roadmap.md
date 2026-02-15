@@ -37,3 +37,4 @@
 - [x] Add protocol version envelope fields
 - [x] Add adversarial descriptor validation tests
 - [x] Add persistence-backed audit/session storage (opt-in via `WEBMCP_DATA_DIR`)
+- [x] Add configurable argument redaction for audit logs
