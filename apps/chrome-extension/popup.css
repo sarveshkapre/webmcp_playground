@@ -5,14 +5,20 @@
   --text: #0b1c2a;
   --muted: #54708b;
   --brand: #0d8e7f;
+  --brand-soft: #d5f1ec;
+  --warning: #975b00;
+  --warning-bg: #fff4df;
 }
 
 body {
   margin: 0;
-  width: 360px;
   background: var(--bg);
   color: var(--text);
   font: 14px/1.45 "Avenir Next", "Segoe UI", sans-serif;
+}
+
+body.popup-mode {
+  width: 390px;
 }
 
 main {
@@ -20,14 +26,15 @@ main {
 }
 
 h1 {
-  margin: 0 0 4px;
+  margin: 0;
   font-size: 18px;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .brand img {
@@ -36,33 +43,41 @@ h1 {
 }
 
 .muted {
-  margin: 0 0 12px;
+  margin: 0;
   color: var(--muted);
   font-size: 12px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin: 8px 0 6px;
   font-weight: 600;
   font-size: 12px;
   color: var(--muted);
 }
 
-input {
+input,
+select,
+textarea {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   background: var(--surface);
+  color: var(--text);
 }
 
+textarea {
+  font: 12px/1.4 "SF Mono", Menlo, monospace;
+}
+
+.utility-row,
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -75,8 +90,18 @@ button {
   cursor: pointer;
 }
 
+button.secondary {
+  color: var(--text);
+  background: #e3ecea;
+}
+
 button:hover {
-  filter: brightness(0.95);
+  filter: brightness(0.96);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .panel {
@@ -84,7 +109,7 @@ button:hover {
   border-radius: 12px;
   padding: 9px;
   background: var(--surface);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 #capability {
@@ -95,7 +120,74 @@ button:hover {
 pre {
   margin: 6px 0 0;
   white-space: pre-wrap;
-  max-height: 180px;
+  max-height: 220px;
   overflow: auto;
   font: 11px/1.35 "SF Mono", Menlo, monospace;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tab {
+  padding: 8px 6px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: #edf3f0;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.tab.active {
+  background: var(--brand-soft);
+  border-color: #9adfd3;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.checkbox-row input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+
+.guardrail {
+  border: 1px solid #ffd08b;
+  background: var(--warning-bg);
+  color: var(--warning);
+  padding: 8px;
+  border-radius: 10px;
+  margin: 6px 0 10px;
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  body.sidepanel-mode .utility-row,
+  body.sidepanel-mode .row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  body.sidepanel-mode {
+    min-width: 460px;
+  }
 }

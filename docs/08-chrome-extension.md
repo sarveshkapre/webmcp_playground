@@ -13,9 +13,17 @@ The extension helps developers answer two onboarding questions quickly:
 
 ## What it does
 
-- Detects `navigator.modelContext` on the active tab (popup button: **Detect in Tab**).
-- Calls local `POST /mcp/list_tools` and shows tool names (popup button: **List Tools**).
-- Saves preferred base URL in extension local storage.
+- Supports popup and side panel inspection modes.
+- Tabs: `Detect`, `Tools`, `Call`, `Audit`, `Metrics`.
+- Detects `navigator.modelContext` on the active tab.
+- Calls local WebMCP endpoints:
+  - `POST /mcp/list_tools`
+  - `POST /mcp/call_tool`
+  - `GET /mcp/audit_log`
+  - `GET /mcp/metrics`
+- Provides safe call guardrails for write/sensitive/session-scoped tools.
+- Runs a conformance quick check against existing local endpoint behavior.
+- Deep-links to web playground route: `http://localhost:3000/playground`.
 - Ships a branded icon pack for toolbar and extension listing.
 
 ## Branding assets

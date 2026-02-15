@@ -47,3 +47,10 @@
 - [x] Add Chrome extension MVP for capability detection and local tool listing
 - [x] Split web app into dedicated tutorial/playground/extension routes
 - [x] Add branded icon pack for extension distribution
+
+## Phase 8: Inspector Phase B
+
+- [x] Popup tabs: Detect, Tools, Call, Audit, Metrics
+- [x] Safe call guardrails for write/sensitive/session-scoped tools
+- [x] Side panel mode with shared inspector workflows
+- [x] Conformance quick check button using local endpoints

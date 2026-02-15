@@ -92,6 +92,10 @@ Details: `docs/03-llm-integration.md`
 - Website app: `apps/web` (Home, `/tutorial`, `/playground`, `/extension`)
 - Chrome extension: `apps/chrome-extension` (WebMCP Inspector + branded icon pack)
 - Extension guide: `docs/08-chrome-extension.md`
+- Phase B implemented in extension popup/side panel:
+  - tabs: `Detect`, `Tools`, `Call`, `Audit`, `Metrics`
+  - conformance quick check
+  - safe call guardrails
 
 ## WebMCP Guidance Alignment
 
