@@ -31,22 +31,27 @@ This repo is an educational runtime playground, not the standard itself. We trea
 | Unknown tool handling | Prevents silent behavior drift | Implemented | `tests/webmcp.guidance.test.ts` |
 | Per-tool argument schemas | Minimizes unsafe or ambiguous inputs | Implemented | `src/tools.ts`, tests |
 | Unique tool names | Aligns with proposal guidance | Implemented | `tests/webmcp.guidance.test.ts` |
+| Protocol envelope fields (`protocolVersion`, `requestId`) | Compatibility and traceability | Implemented | `tests/webmcp.guidance.test.ts` |
+| Side-effect and confirmation policy | Safer handling for write/sensitive tools | Implemented | `tests/mcp.integration.test.ts` |
+| Session-scoped tool isolation | Prevents cross-session state bleed | Implemented | `tests/mcp.integration.test.ts` |
+| Tool-call audit logging | Accountability and debugging | Implemented | `tests/mcp.integration.test.ts` |
+| Descriptor injection guard | Reduces metadata poisoning risk | Implemented | `tests/security.injection.test.ts` |
 
 ## Security Guidance Mapping (Current)
 
 | Guidance area | Current handling | Gap |
 |---|---|---|
-| Prompt/tool poisoning awareness | Strict schemas and explicit errors reduce malformed requests | Add output sanitization fixtures |
-| Misrepresentation of tool intent | Tool descriptions remain concise and behavior-specific | Add side-effect classification metadata |
-| Over-parameterization/privacy | Tool inputs intentionally minimal | Add policy layer for sensitive args |
-| Session isolation | Not yet implemented | Add explicit session ID handling |
+| Prompt/tool poisoning awareness | Descriptor validator rejects risky metadata patterns; strict payload validation in place | Add richer output-sanitization fixtures |
+| Misrepresentation of tool intent | Tool metadata includes side-effect class and confirmation requirements | Add stronger behavioral contracts for external integrations |
+| Over-parameterization/privacy | Tool inputs remain minimal and schema-validated | Add configurable redaction/PII policies |
+| Session isolation | Session-scoped tools require `sessionId`, with isolated in-memory state | Add persistence-backed session storage |
 
 ## Build-Order For Next Required Work
 
-1. Add side-effect metadata and confirmation requirements for write/sensitive tools.
-2. Add session ID support and per-session state isolation.
-3. Add adversarial security tests for prompt and output injection scenarios.
-4. Add protocol version field and compatibility tests.
+1. Add persistence-backed audit and session stores.
+2. Add configurable redaction policies for sensitive tool arguments and outputs.
+3. Add compatibility tests for multiple protocol versions.
+4. Add stronger output sanitization fixtures for adversarial content.
 
 ## PR Rule
 

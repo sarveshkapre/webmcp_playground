@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { createServer, type Server } from "node:http";
-import { after, before, test } from "node:test";
+import { after, before, beforeEach, test } from "node:test";
+import { resetAuditLog } from "../src/audit-log.js";
 import { handleRequest } from "../src/app.js";
+import { resetSessionStore } from "../src/session-store.js";
 
 let server: Server;
 let baseUrl = "";
@@ -35,6 +37,11 @@ after(async () => {
   });
 });
 
+beforeEach(() => {
+  resetSessionStore();
+  resetAuditLog();
+});
+
 test("POST /mcp/list_tools returns tool descriptors", async () => {
   const response = await fetch(`${baseUrl}/mcp/list_tools`, {
     method: "POST",
@@ -47,7 +54,7 @@ test("POST /mcp/list_tools returns tool descriptors", async () => {
   assert.ok(Array.isArray(body.tools));
   assert.deepEqual(
     body.tools?.map((tool) => tool.name),
-    ["echo", "sum", "now_utc"]
+    ["echo", "sum", "now_utc", "append_note", "list_notes", "clear_notes"]
   );
 });
 
@@ -84,4 +91,108 @@ test("POST /mcp/call_tool rejects invalid args", async () => {
   };
   assert.equal(body.ok, false);
   assert.equal(body.error?.code, "INVALID_ARGUMENTS");
+});
+
+test("POST /mcp/call_tool requires confirmation for append_note", async () => {
+  const response = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "append_note",
+      sessionId: "s-1",
+      arguments: { text: "test note" }
+    })
+  });
+
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as {
+    ok?: boolean;
+    error?: { code?: string };
+  };
+  assert.equal(body.ok, false);
+  assert.equal(body.error?.code, "CONFIRMATION_REQUIRED");
+});
+
+test("POST /mcp/call_tool enforces session isolation for notes", async () => {
+  const appendOne = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "append_note",
+      sessionId: "alpha",
+      confirmed: true,
+      arguments: { text: "alpha note" }
+    })
+  });
+  assert.equal(appendOne.status, 200);
+
+  const appendTwo = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "append_note",
+      sessionId: "beta",
+      confirmed: true,
+      arguments: { text: "beta note" }
+    })
+  });
+  assert.equal(appendTwo.status, 200);
+
+  const alphaList = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "list_notes",
+      sessionId: "alpha",
+      arguments: {}
+    })
+  });
+  const alphaBody = (await alphaList.json()) as {
+    ok?: boolean;
+    result?: { notes?: string[] };
+  };
+
+  const betaList = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "list_notes",
+      sessionId: "beta",
+      arguments: {}
+    })
+  });
+  const betaBody = (await betaList.json()) as {
+    ok?: boolean;
+    result?: { notes?: string[] };
+  };
+
+  assert.equal(alphaBody.ok, true);
+  assert.equal(betaBody.ok, true);
+  assert.deepEqual(alphaBody.result?.notes, ["alpha note"]);
+  assert.deepEqual(betaBody.result?.notes, ["beta note"]);
+});
+
+test("GET /mcp/audit_log returns recent entries", async () => {
+  const call = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "sum",
+      arguments: { a: 20, b: 22 }
+    })
+  });
+  assert.equal(call.status, 200);
+
+  const audit = await fetch(`${baseUrl}/mcp/audit_log?limit=5`, {
+    method: "GET"
+  });
+  assert.equal(audit.status, 200);
+
+  const body = (await audit.json()) as {
+    entries?: Array<{ toolName?: string; outcome?: string }>;
+  };
+  assert.ok(Array.isArray(body.entries));
+  assert.equal(body.entries.length > 0, true);
+  assert.equal(body.entries[0]?.toolName, "sum");
+  assert.equal(body.entries[0]?.outcome, "ok");
 });

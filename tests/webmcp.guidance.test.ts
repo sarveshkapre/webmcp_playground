@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { createServer, request, type IncomingHttpHeaders, type Server } from "node:http";
-import { after, before, test } from "node:test";
+import { after, before, beforeEach, test } from "node:test";
+import { resetAuditLog } from "../src/audit-log.js";
 import { handleRequest } from "../src/app.js";
+import { PROTOCOL_VERSION } from "../src/protocol.js";
+import { resetSessionStore } from "../src/session-store.js";
 
 let server: Server;
 let baseUrl = "";
@@ -33,6 +36,11 @@ after(async () => {
       resolve();
     });
   });
+});
+
+beforeEach(() => {
+  resetSessionStore();
+  resetAuditLog();
 });
 
 function postRawJson(path: string, body: string): Promise<{
@@ -91,9 +99,18 @@ test("tool names are unique and include required metadata", async () => {
 
   assert.equal(response.status, 200);
   const body = (await response.json()) as {
-    tools?: Array<{ name?: string; description?: string; input?: unknown }>;
+    protocolVersion?: string;
+    tools?: Array<{
+      name?: string;
+      description?: string;
+      input?: unknown;
+      sideEffect?: string;
+      requiresConfirmation?: boolean;
+      sessionScoped?: boolean;
+    }>;
   };
   assert.ok(Array.isArray(body.tools));
+  assert.equal(body.protocolVersion, PROTOCOL_VERSION);
 
   const names = body.tools.map((tool) => tool.name);
   assert.equal(new Set(names).size, names.length);
@@ -105,6 +122,9 @@ test("tool names are unique and include required metadata", async () => {
     assert.ok((tool.description ?? "").length > 0);
     assert.equal(typeof tool.input, "object");
     assert.notEqual(tool.input, null);
+    assert.ok(["read", "write", "sensitive"].includes(tool.sideEffect ?? ""));
+    assert.equal(typeof tool.requiresConfirmation, "boolean");
+    assert.equal(typeof tool.sessionScoped, "boolean");
   }
 });
 
@@ -125,6 +145,47 @@ test("unknown tool returns TOOL_NOT_FOUND", async () => {
   };
   assert.equal(body.ok, false);
   assert.equal(body.error?.code, "TOOL_NOT_FOUND");
+});
+
+test("responses include protocolVersion and requestId envelope fields", async () => {
+  const response = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "sum",
+      arguments: { a: 1, b: 2 }
+    })
+  });
+
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as {
+    protocolVersion?: string;
+    requestId?: string;
+    ok?: boolean;
+  };
+  assert.equal(body.ok, true);
+  assert.equal(body.protocolVersion, PROTOCOL_VERSION);
+  assert.equal(typeof body.requestId, "string");
+  assert.ok((body.requestId ?? "").length > 0);
+});
+
+test("session-scoped tools require sessionId", async () => {
+  const response = await fetch(`${baseUrl}/mcp/call_tool`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      name: "list_notes",
+      arguments: {}
+    })
+  });
+
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as {
+    ok?: boolean;
+    error?: { code?: string };
+  };
+  assert.equal(body.ok, false);
+  assert.equal(body.error?.code, "SESSION_REQUIRED");
 });
 
 test("invalid request shape returns BAD_REQUEST with HTTP 400", async () => {

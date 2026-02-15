@@ -9,8 +9,8 @@
 ## Phase 2: Stronger Protocol
 
 - [x] Add argument schema validation
-- [ ] Add richer error codes
-- [ ] Add request IDs and tracing
+- [x] Add richer error codes
+- [x] Add request IDs and tracing
 
 ## Phase 3: Real LLM Integration
 
@@ -28,5 +28,12 @@
 
 - [x] Add explicit alignment checklist against reference docs
 - [x] Add guidance/conformance test coverage
-- [ ] Add side-effect and confirmation policy model
-- [ ] Add session isolation semantics
+- [x] Add side-effect and confirmation policy model
+- [x] Add session isolation semantics
+
+## Phase 6: Hardening
+
+- [x] Add in-memory audit trail for tool calls
+- [x] Add protocol version envelope fields
+- [x] Add adversarial descriptor validation tests
+- [ ] Add persistence-backed audit/session storage

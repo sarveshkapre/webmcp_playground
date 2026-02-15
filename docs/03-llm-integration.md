@@ -9,6 +9,8 @@ It does the following:
 3. Executes any requested function calls against local WebMCP (`/mcp/call_tool`).
 4. Sends function outputs back to OpenAI to produce a final answer.
 
+Note: tools with side effects may require `sessionId` and `confirmed=true` in tool-call payloads.
+
 ## Run
 
 Start the local WebMCP playground server:
@@ -28,6 +30,8 @@ Optional environment variables:
 
 - `OPENAI_MODEL` (default: `gpt-4.1-mini`)
 - `BASE_URL` (default: `http://localhost:8787`)
+- `WEBMCP_SESSION_ID` (default: `agent-session`)
+- `WEBMCP_AUTO_CONFIRM` (default: `true`)
 
 ## Notes
 

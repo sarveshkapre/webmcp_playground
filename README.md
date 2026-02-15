@@ -14,7 +14,12 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Example client (`src/client.ts`)
 - Endpoint integration tests (`tests/mcp.integration.test.ts`)
 - Guidance/conformance checks (`tests/webmcp.guidance.test.ts`)
+- Adversarial descriptor security tests (`tests/security.injection.test.ts`)
 - Strict tool input validation with `zod` (`src/tools.ts`)
+- Tool side-effect policy (read/write/sensitive) with confirmation requirements
+- Session-scoped tool isolation (`append_note`, `list_notes`, `clear_notes`)
+- Protocol envelope fields (`protocolVersion`, `requestId`)
+- Tool-call audit endpoint (`GET /mcp/audit_log`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)
@@ -37,6 +42,12 @@ Run tests:
 
 ```bash
 npm test
+```
+
+Inspect recent audit entries:
+
+```bash
+curl "http://localhost:8787/mcp/audit_log?limit=10"
 ```
 
 ## LLM Integration Example
@@ -73,13 +84,17 @@ When protocol semantics change, update that file and matching tests.
 ├── examples/
 │   └── openai_responses_agent.mjs
 ├── src/
+│   ├── audit-log.ts
 │   ├── app.ts
 │   ├── client.ts
+│   ├── policy.ts
 │   ├── protocol.ts
 │   ├── server.ts
+│   ├── session-store.ts
 │   └── tools.ts
 ├── tests/
 │   ├── mcp.integration.test.ts
+│   ├── security.injection.test.ts
 │   └── webmcp.guidance.test.ts
 └── package.json
 ```

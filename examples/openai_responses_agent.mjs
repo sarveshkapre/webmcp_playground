@@ -3,6 +3,8 @@
 const openAiApiKey = process.env.OPENAI_API_KEY;
 const model = process.env.OPENAI_MODEL ?? "gpt-4.1-mini";
 const mcpBaseUrl = process.env.BASE_URL ?? "http://localhost:8787";
+const webmcpSessionId = process.env.WEBMCP_SESSION_ID ?? "agent-session";
+const autoConfirm = (process.env.WEBMCP_AUTO_CONFIRM ?? "true").toLowerCase() === "true";
 const userPrompt = process.argv.slice(2).join(" ") || "What is 12 + 30?";
 
 if (!openAiApiKey) {
@@ -74,6 +76,7 @@ function extractFunctionCalls(responseBody) {
 async function main() {
   const toolsResponse = await postJson(`${mcpBaseUrl}/mcp/list_tools`, {});
   const mcpTools = Array.isArray(toolsResponse.tools) ? toolsResponse.tools : [];
+  const toolByName = new Map(mcpTools.map((tool) => [tool.name, tool]));
 
   const openAiTools = mcpTools.map((tool) => ({
     type: "function",
@@ -117,10 +120,20 @@ async function main() {
       }
     }
 
-    const toolResult = await postJson(`${mcpBaseUrl}/mcp/call_tool`, {
+    const descriptor = toolByName.get(call.name);
+    const payload = {
       name: call.name,
       arguments: args
-    });
+    };
+
+    if (descriptor?.sessionScoped) {
+      payload.sessionId = webmcpSessionId;
+    }
+    if (descriptor?.requiresConfirmation && autoConfirm) {
+      payload.confirmed = true;
+    }
+
+    const toolResult = await postJson(`${mcpBaseUrl}/mcp/call_tool`, payload);
 
     functionOutputs.push({
       type: "function_call_output",

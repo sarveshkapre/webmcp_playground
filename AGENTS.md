@@ -33,10 +33,13 @@ npm run client
 
 - `src/protocol.ts`: Shared protocol types and envelopes.
 - `src/tools.ts`: Tool registry and tool implementations.
+- `src/policy.ts`: Tool policy checks (confirmation/session requirements).
+- `src/session-store.ts`: Session-scoped in-memory state used by tools.
+- `src/audit-log.ts`: In-memory audit trail for tool calls.
 - `src/app.ts`: HTTP route handling and request validation.
 - `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.
-- `tests/`: Endpoint integration tests.
+- `tests/`: Endpoint integration, guidance, and security tests.
 - `docs/`: Learning notes and roadmap.
 - `docs/04-webmcp-alignment.md`: Required alignment checklist against reference WebMCP guidance.
 
