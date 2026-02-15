@@ -20,7 +20,7 @@ WebMCP-like patterns help LLM apps call external capabilities through a clear to
 
 ## Next Iteration Ideas
 
-- Add schema validation for tool input.
 - Add auth layer for non-local usage.
 - Add streaming output support.
-- Add integration tests for protocol endpoints.
+- Add session isolation support.
+- Add tool side-effect classes and user confirmation hooks.

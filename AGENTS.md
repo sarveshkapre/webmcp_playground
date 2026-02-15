@@ -38,6 +38,7 @@ npm run client
 - `src/client.ts`: Example usage against local server.
 - `tests/`: Endpoint integration tests.
 - `docs/`: Learning notes and roadmap.
+- `docs/04-webmcp-alignment.md`: Required alignment checklist against reference WebMCP guidance.
 
 ## Change Checklist
 
@@ -48,6 +49,7 @@ Before opening a PR:
 3. Run `npm run typecheck`.
 4. Run `npm run build`.
 5. Verify client still works against local server.
+6. If protocol/security semantics changed, update `docs/04-webmcp-alignment.md`.
 
 ## Style
 

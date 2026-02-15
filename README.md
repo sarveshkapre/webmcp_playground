@@ -13,6 +13,7 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 - Minimal TypeScript WebMCP-style playground server (`src/server.ts`)
 - Example client (`src/client.ts`)
 - Endpoint integration tests (`tests/mcp.integration.test.ts`)
+- Guidance/conformance checks (`tests/webmcp.guidance.test.ts`)
 - Strict tool input validation with `zod` (`src/tools.ts`)
 - OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
@@ -49,6 +50,14 @@ node examples/openai_responses_agent.mjs "What is 7 + 35?"
 
 Details: `docs/03-llm-integration.md`
 
+## WebMCP Guidance Alignment
+
+This repo tracks alignment to WebMCP reference guidance in:
+
+- `docs/04-webmcp-alignment.md`
+
+When protocol semantics change, update that file and matching tests.
+
 ## Project Structure
 
 ```text
@@ -59,7 +68,8 @@ Details: `docs/03-llm-integration.md`
 ├── docs/
 │   ├── 01-webmcp-primer.md
 │   ├── 02-roadmap.md
-│   └── 03-llm-integration.md
+│   ├── 03-llm-integration.md
+│   └── 04-webmcp-alignment.md
 ├── examples/
 │   └── openai_responses_agent.mjs
 ├── src/
@@ -69,7 +79,8 @@ Details: `docs/03-llm-integration.md`
 │   ├── server.ts
 │   └── tools.ts
 ├── tests/
-│   └── mcp.integration.test.ts
+│   ├── mcp.integration.test.ts
+│   └── webmcp.guidance.test.ts
 └── package.json
 ```
 

@@ -23,3 +23,10 @@
 - [x] Add tests
 - [ ] Add architecture diagram
 - [ ] Add release tags/changelog
+
+## Phase 5: WebMCP Guidance Alignment
+
+- [x] Add explicit alignment checklist against reference docs
+- [x] Add guidance/conformance test coverage
+- [ ] Add side-effect and confirmation policy model
+- [ ] Add session isolation semantics
