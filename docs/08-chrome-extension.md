@@ -1,4 +1,4 @@
-# Chrome Extension Companion (WebMCP Scout)
+# Chrome Extension Companion (WebMCP Inspector)
 
 Location:
 

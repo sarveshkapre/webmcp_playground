@@ -1,4 +1,4 @@
-# WebMCP Scout (Chrome Extension MVP)
+# WebMCP Inspector (Chrome Extension MVP)
 
 Purpose:
 

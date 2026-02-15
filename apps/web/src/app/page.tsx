@@ -52,7 +52,7 @@ export default function HomePage() {
           <FeatureCard
             icon={<Chrome className="h-5 w-5 text-[var(--brand)]" />}
             title="Chrome Companion"
-            body="Use WebMCP Scout to detect `navigator.modelContext` and quickly verify local server connectivity."
+            body="Use WebMCP Inspector to detect `navigator.modelContext` and quickly verify local server connectivity."
             href="/extension"
             cta="See extension"
           />

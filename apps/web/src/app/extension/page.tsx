@@ -11,8 +11,8 @@ export default function ExtensionPage() {
         <div className="mx-auto max-w-6xl">
           <h1 className="text-4xl md:text-5xl">Chrome Extension Companion</h1>
           <p className="mt-3 max-w-3xl text-lg text-[var(--muted)]">
-            WebMCP Scout helps teams quickly validate whether target pages expose browser-level WebMCP capability and
-            whether local WebMCP servers are reachable.
+            WebMCP Inspector helps teams quickly validate whether target pages expose browser-level WebMCP capability
+            and whether local WebMCP servers are reachable.
           </p>
         </div>
       </section>
