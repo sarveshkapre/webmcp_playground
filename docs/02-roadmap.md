@@ -8,18 +8,18 @@
 
 ## Phase 2: Stronger Protocol
 
-- [ ] Add argument schema validation
+- [x] Add argument schema validation
 - [ ] Add richer error codes
 - [ ] Add request IDs and tracing
 
 ## Phase 3: Real LLM Integration
 
-- [ ] Wire into an LLM agent framework
+- [x] Wire into an LLM agent framework
 - [ ] Add example prompts and transcripts
 - [ ] Capture reliability/performance notes
 
 ## Phase 4: Public Learning Repo Quality
 
-- [ ] Add tests
+- [x] Add tests
 - [ ] Add architecture diagram
 - [ ] Add release tags/changelog

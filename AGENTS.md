@@ -17,6 +17,7 @@ Build and refine a practical WebMCP playground for LLM integrations.
 
 ```bash
 npm install
+npm test
 npm run typecheck
 npm run build
 ```
@@ -32,8 +33,10 @@ npm run client
 
 - `src/protocol.ts`: Shared protocol types and envelopes.
 - `src/tools.ts`: Tool registry and tool implementations.
-- `src/server.ts`: HTTP routes and protocol handling.
+- `src/app.ts`: HTTP route handling and request validation.
+- `src/server.ts`: HTTP server bootstrap.
 - `src/client.ts`: Example usage against local server.
+- `tests/`: Endpoint integration tests.
 - `docs/`: Learning notes and roadmap.
 
 ## Change Checklist
@@ -41,9 +44,10 @@ npm run client
 Before opening a PR:
 
 1. Update docs for behavior changes.
-2. Run `npm run typecheck`.
-3. Run `npm run build`.
-4. Verify client still works against local server.
+2. Run `npm test`.
+3. Run `npm run typecheck`.
+4. Run `npm run build`.
+5. Verify client still works against local server.
 
 ## Style
 

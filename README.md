@@ -12,9 +12,12 @@ A public playground repository to learn, prototype, and test **WebMCP patterns f
 
 - Minimal TypeScript WebMCP-style playground server (`src/server.ts`)
 - Example client (`src/client.ts`)
+- Endpoint integration tests (`tests/mcp.integration.test.ts`)
+- Strict tool input validation with `zod` (`src/tools.ts`)
+- OpenAI Responses integration example (`examples/openai_responses_agent.mjs`)
 - Learning docs and roadmap (`docs/`)
 - Contributor and agent guidelines (`CONTRIBUTING.md`, `AGENTS.md`)
-- Basic CI for typecheck + build (`.github/workflows/ci.yml`)
+- Basic CI for test + typecheck + build (`.github/workflows/ci.yml`)
 
 ## Quickstart
 
@@ -29,6 +32,23 @@ In another terminal:
 npm run client
 ```
 
+Run tests:
+
+```bash
+npm test
+```
+
+## LLM Integration Example
+
+This repo includes a minimal OpenAI Responses tool loop example that calls local WebMCP endpoints.
+
+```bash
+export OPENAI_API_KEY="<your_key>"
+node examples/openai_responses_agent.mjs "What is 7 + 35?"
+```
+
+Details: `docs/03-llm-integration.md`
+
 ## Project Structure
 
 ```text
@@ -38,12 +58,18 @@ npm run client
 ├── CONTRIBUTING.md
 ├── docs/
 │   ├── 01-webmcp-primer.md
-│   └── 02-roadmap.md
+│   ├── 02-roadmap.md
+│   └── 03-llm-integration.md
+├── examples/
+│   └── openai_responses_agent.mjs
 ├── src/
+│   ├── app.ts
 │   ├── client.ts
 │   ├── protocol.ts
 │   ├── server.ts
 │   └── tools.ts
+├── tests/
+│   └── mcp.integration.test.ts
 └── package.json
 ```
 
@@ -52,7 +78,7 @@ npm run client
 1. Run the local server and client.
 2. Add a new tool in `src/tools.ts`.
 3. Extend the protocol shapes in `src/protocol.ts`.
-4. Wire a real LLM app to call this playground.
+4. Run `examples/openai_responses_agent.mjs` with your API key.
 5. Iterate with notes in `docs/`.
 
 ## Publish As Public GitHub Repo

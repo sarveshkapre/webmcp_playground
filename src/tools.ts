@@ -1,4 +1,5 @@
-import type { CallToolRequest, CallToolResponse, Json, ToolDescriptor } from "./protocol.js";
+import { z } from "zod";
+import type { CallToolRequest, CallToolResponse, ToolDescriptor } from "./protocol.js";
 
 const tools: ToolDescriptor[] = [
   {
@@ -27,8 +28,15 @@ export function listTools(): ToolDescriptor[] {
   return tools;
 }
 
-function toNumber(value: Json | undefined): number | null {
-  return typeof value === "number" && Number.isFinite(value) ? value : null;
+const EchoArgsSchema = z.object({ text: z.string() }).strict();
+const SumArgsSchema = z.object({ a: z.number().finite(), b: z.number().finite() }).strict();
+const EmptyArgsSchema = z.object({}).strict();
+
+function invalidArguments(message: string): CallToolResponse {
+  return {
+    ok: false,
+    error: { code: "INVALID_ARGUMENTS", message }
+  };
 }
 
 export function callTool(req: CallToolRequest): CallToolResponse {
@@ -36,29 +44,26 @@ export function callTool(req: CallToolRequest): CallToolResponse {
 
   switch (req.name) {
     case "echo": {
-      const text = args.text;
-      if (typeof text !== "string") {
-        return {
-          ok: false,
-          error: { code: "INVALID_ARGUMENTS", message: "Expected { text: string }." }
-        };
+      const parsed = EchoArgsSchema.safeParse(args);
+      if (!parsed.success) {
+        return invalidArguments("Expected { text: string }.");
       }
-      return { ok: true, result: { text } };
+      return { ok: true, result: { text: parsed.data.text } };
     }
 
     case "sum": {
-      const a = toNumber(args.a);
-      const b = toNumber(args.b);
-      if (a === null || b === null) {
-        return {
-          ok: false,
-          error: { code: "INVALID_ARGUMENTS", message: "Expected { a: number, b: number }." }
-        };
+      const parsed = SumArgsSchema.safeParse(args);
+      if (!parsed.success) {
+        return invalidArguments("Expected { a: number, b: number }.");
       }
-      return { ok: true, result: { value: a + b } };
+      return { ok: true, result: { value: parsed.data.a + parsed.data.b } };
     }
 
     case "now_utc": {
+      const parsed = EmptyArgsSchema.safeParse(args);
+      if (!parsed.success) {
+        return invalidArguments("Expected no arguments.");
+      }
       return {
         ok: true,
         result: { iso: new Date().toISOString() }

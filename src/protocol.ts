@@ -18,7 +18,7 @@ export interface ListToolsResponse {
 
 export interface CallToolRequest {
   name: string;
-  arguments?: Record<string, Json>;
+  arguments?: Record<string, unknown>;
 }
 
 export interface CallToolResponse {
