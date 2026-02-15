@@ -86,6 +86,7 @@ When protocol semantics change, update that file and matching tests.
 .
 ├── .github/workflows/ci.yml
 ├── AGENTS.md
+├── CHANGELOG.md
 ├── CONTRIBUTING.md
 ├── docs/
 │   ├── 01-webmcp-primer.md

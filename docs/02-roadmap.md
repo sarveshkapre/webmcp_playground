@@ -22,7 +22,7 @@
 
 - [x] Add tests
 - [x] Add architecture diagram
-- [ ] Add release tags/changelog
+- [x] Add release tags/changelog
 
 ## Phase 5: WebMCP Guidance Alignment
 
